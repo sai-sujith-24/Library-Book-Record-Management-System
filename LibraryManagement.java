@@ -37,19 +37,15 @@ public class LibraryManagement {
                         System.out.print("Enter Availability Status: ");
                         String status = sc.nextLine();
 
-                        FileOutputStream fout;
-
-                        if (choice == 1) {
-                            fout = new FileOutputStream("Library.txt");
-                        } else {
-                            fout = new FileOutputStream("Library.txt", true);
-                        }
-
                         if (id <= 0 || title.isBlank() || author.isBlank() || status.isBlank() || title.contains(",") || author.contains(",") || status.contains(",")) {
                             System.out.println("Invalid record: use a positive ID and nonempty text without commas.");
-                            fout.close();
                             break;
                         }
+                        if (choice == 1) {
+                            System.out.println("Warning: this will replace all existing records in Library.txt.");
+                        }
+                        FileOutputStream fout = new FileOutputStream("Library.txt", choice != 1);
+
                         String data = id + "," + title + "," +
                                       author + "," + status + "\n";
 
