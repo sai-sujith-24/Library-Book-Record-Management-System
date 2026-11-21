@@ -2,6 +2,7 @@
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
 
 public class LibraryManagement {
     public static void main(String[] args) {
@@ -44,10 +45,15 @@ public class LibraryManagement {
                             fout = new FileOutputStream("Library.txt", true);
                         }
 
+                        if (id <= 0 || title.isBlank() || author.isBlank() || status.isBlank() || title.contains(",") || author.contains(",") || status.contains(",")) {
+                            System.out.println("Invalid record: use a positive ID and nonempty text without commas.");
+                            fout.close();
+                            break;
+                        }
                         String data = id + "," + title + "," +
                                       author + "," + status + "\n";
 
-                        fout.write(data.getBytes());
+                        fout.write(data.getBytes(StandardCharsets.UTF_8));
                         fout.close();
 
                         System.out.println("Book record successfully added to the file.");
